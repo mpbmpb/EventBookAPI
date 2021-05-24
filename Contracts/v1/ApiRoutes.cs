@@ -6,11 +6,11 @@ namespace EventBookAPI.Contracts.v1
         public const string Version = "v1";
         private const string Base = Root + "/" + Version;
 
-        public static class Paragraphs
+        public static class PageElements
         {
-            public const string GetAll = Base + "/" + nameof(Paragraphs);
-            public const string Create = Base + "/" + nameof(Paragraphs);
-            public const string Get = Base + "/" + nameof(Paragraphs) + "/{paragraphId}";
+            public const string GetAll = Base + "/" + nameof(PageElements);
+            public const string Create = Base + "/" + nameof(PageElements);
+            public const string Get = Base + "/" + nameof(PageElements) + "/{pageElementId}";
         }
     }
 }

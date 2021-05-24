@@ -1,4 +1,5 @@
 using EventBookAPI.Data;
+using EventBookAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ namespace EventBookAPI.Installers
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddSingleton<IPageElementService, PageElementService>();
         }
     }
 }
