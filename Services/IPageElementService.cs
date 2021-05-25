@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using EventBookAPI.Domain;
 
 namespace EventBookAPI.Services
 {
     public interface IPageElementService
     {
-        List<PageElement> GetPageElements();
+        Task<List<PageElement>> GetPageElementsAsync();
 
-        PageElement GetPageElement(Guid Id);
+        Task<PageElement> GetPageElementByIdAsync(Guid Id);
 
-        void AddPageElement(PageElement pageElement);
+        Task<bool> CreatePageElementAsync(PageElement pageElement);
+
+        Task<bool> UpdatePageElementAsync(PageElement pageElementToUpdate);
+        
+        Task<bool> DeletePageElementAsync(Guid pageElementId);
     }
 }

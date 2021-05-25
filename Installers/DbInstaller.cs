@@ -14,7 +14,7 @@ namespace EventBookAPI.Installers
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddSingleton<IPageElementService, PageElementService>();
+            services.AddScoped<IPageElementService, PageElementService>();
         }
     }
 }

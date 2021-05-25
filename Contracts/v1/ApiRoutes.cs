@@ -8,9 +8,11 @@ namespace EventBookAPI.Contracts.v1
 
         public static class PageElements
         {
-            public const string GetAll = Base + "/" + nameof(PageElements);
             public const string Create = Base + "/" + nameof(PageElements);
+            public const string GetAll = Base + "/" + nameof(PageElements);
             public const string Get = Base + "/" + nameof(PageElements) + "/{pageElementId}";
+            public const string Update = Base + "/" + nameof(PageElements) + "/{pageElementId}";
+            public const string Delete = Base + "/" + nameof(PageElements) + "/{pageElementId}";
         }
     }
 }

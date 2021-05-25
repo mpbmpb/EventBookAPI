@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
@@ -20,27 +21,23 @@ namespace EventBookAPI.Controllers.v1
         }
 
         [HttpGet(ApiRoutes.PageElements.GetAll)]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var pageElements = _pageElementService.GetPageElements();
-            
-            return Ok(pageElements);
+            return Ok(await _pageElementService.GetPageElementsAsync());
         }
 
         [HttpPost(ApiRoutes.PageElements.Create)]
-        public IActionResult Create([FromBody] CreatePageElementRequest pageElementRequest)
+        public async Task<IActionResult> Create([FromBody] CreatePageElementRequest pageElementRequest)
         {
-            var pageElement = new PageElement {Id = pageElementRequest.Id, Content = pageElementRequest.Content, Classname = pageElementRequest.Classname};
-            
-            if (pageElement.Id != Guid.Empty)
-                pageElement.Id = Guid.NewGuid();
-            
-            _pageElementService.AddPageElement(pageElement);
+            var pageElement = new PageElement {
+                Content = pageElementRequest.Content, 
+                Classname = pageElementRequest.Classname};
+
+            await _pageElementService.CreatePageElementAsync(pageElement);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-
             var locationUri = baseUrl + "/" + 
-                        ApiRoutes.PageElements.Get.Replace("{pageElementId}", pageElement.Id.ToString());
+                              ApiRoutes.PageElements.Get.Replace("{pageElementId}", pageElement.Id.ToString());
 
             var response = new PageElementResponse
             {
@@ -53,14 +50,44 @@ namespace EventBookAPI.Controllers.v1
         }
 
         [HttpGet(ApiRoutes.PageElements.Get)]
-        public IActionResult Get([FromRoute] Guid pageElementId)
+        public async Task<IActionResult> Get([FromRoute] Guid pageElementId)
         {
-            var pageElement = _pageElementService.GetPageElement(pageElementId);
+            var pageElement = await _pageElementService.GetPageElementByIdAsync(pageElementId);
 
             if (pageElement is null)
                 return NotFound();
             
             return Ok(pageElement);
+        }
+
+        [HttpPut(ApiRoutes.PageElements.Update)]
+        public async Task<IActionResult> Update([FromRoute] Guid pageElementId, [FromBody] UpdatePageElementRequest pageElementRequest)
+        {
+            var pageElement = await _pageElementService.GetPageElementByIdAsync(pageElementId);
+
+            if (pageElement is null)
+                return NotFound();
+            
+            pageElement.Content = pageElementRequest.Content;
+            pageElement.Classname = pageElementRequest.Classname;
+
+            var updated = await _pageElementService.UpdatePageElementAsync(pageElement);
+
+            if (updated)
+                return Ok(pageElement);
+            
+            return NotFound(); 
+        }
+        
+        [HttpDelete(ApiRoutes.PageElements.Delete)]
+        public async Task<IActionResult> Delete([FromRoute] Guid pageElementId)
+        {        
+            var deleted = await _pageElementService.DeletePageElementAsync(pageElementId);
+            
+            if (deleted)
+                return NoContent();
+
+            return NotFound();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using EventBookAPI.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventBookAPI.Data
@@ -9,5 +10,7 @@ namespace EventBookAPI.Data
             : base(options)
         {
         }
+        
+        public DbSet<PageElement> PageElements { get; set; }
     }
 }
