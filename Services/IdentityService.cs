@@ -53,6 +53,36 @@ namespace EventBookAPI.Services
                 };
             }
 
+            return GenerateAuthenticationResult(newUser);
+        }
+
+        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] {"User does not exist"}
+                };
+            }
+
+            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, password);
+
+            if (!userHasValidPassword)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] {"User/password combination is not correct"}
+                };
+            }
+
+            return GenerateAuthenticationResult(user);
+        }
+
+        private AuthenticationResult GenerateAuthenticationResult(IdentityUser newUser)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
