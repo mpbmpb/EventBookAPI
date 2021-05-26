@@ -1,6 +1,7 @@
 using System.Text;
 using EventBookAPI.Data;
 using EventBookAPI.Options;
+using EventBookAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,8 @@ namespace EventBookAPI.Installers
             configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
 
+            services.AddScoped<IIdentityService, IdentityService>();
+            
             services.AddDefaultIdentity<IdentityUser>(options => 
                         options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<DataContext>()

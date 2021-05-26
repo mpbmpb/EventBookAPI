@@ -14,5 +14,11 @@ namespace EventBookAPI.Contracts.v1
             public const string Update = Base + "/" + nameof(PageElements) + "/{pageElementId}";
             public const string Delete = Base + "/" + nameof(PageElements) + "/{pageElementId}";
         }
+
+        public static class Identity
+        {
+            public const string Login = Base + "/" + nameof(Identity) + "/login";
+            public const string Register = Base + "/" + nameof(Identity) + "/register";
+        }
     }
 }
