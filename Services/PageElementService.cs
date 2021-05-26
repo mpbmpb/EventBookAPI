@@ -15,16 +15,6 @@ namespace EventBookAPI.Services
         public PageElementService(DataContext dataContext)
         {
             _dataContext = dataContext;
-            // _dataContext.PageElements ??= new ();
-            // for (var i = 1; i < 6; i++)
-            // {
-            //     _dataContext.PageElements.Add(new PageElement()
-            //     {
-            //         Id = Guid.NewGuid(), 
-            //         Content = $"some text...{i}", 
-            //         Classname = "text"
-            //     });
-            // }
         }
         
         
