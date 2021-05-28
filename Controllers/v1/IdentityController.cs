@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
+using EventBookAPI.Domain;
 using EventBookAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,37 +30,38 @@ namespace EventBookAPI.Controllers.v1
             }
             
             var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
-
-            if (!authResponse.Success)
-            {
-                return BadRequest(new AuthFailedResponse
-                {
-                    Errors = authResponse.Errors
-                });
-            }
-            
-            return Ok(new AuthSuccessResponse
-            {
-                Token =  authResponse.Token
-            });
+            return ResultBasedOn(authResponse);
         }
-        
+
         [HttpPost(ApiRoutes.Identity.Login)]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
             var authResponse = await _identityService.LoginAsync(request.Email, request.Password);
+            return ResultBasedOn(authResponse);
+        }
 
-            if (!authResponse.Success)
+
+        [HttpPost(ApiRoutes.Identity.Refresh)]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        {
+            var authResponse = await _identityService.RefreshTokenAsync(request.Token, request.RefreshToken);
+            return ResultBasedOn(authResponse);
+        }
+
+        private IActionResult ResultBasedOn(AuthenticationResult authResponse)
+        {
+            if (authResponse.Success is false)
             {
                 return BadRequest(new AuthFailedResponse
                 {
                     Errors = authResponse.Errors
                 });
             }
-            
+
             return Ok(new AuthSuccessResponse
             {
-                Token =  authResponse.Token
+                Token = authResponse.Token,
+                RefreshToken = authResponse.RefreshToken
             });
         }
     }

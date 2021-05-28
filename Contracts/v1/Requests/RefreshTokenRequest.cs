@@ -1,8 +1,8 @@
 using System;
 
-namespace EventBookAPI.Contracts.v1.Responses
+namespace EventBookAPI.Contracts.v1.Requests
 {
-    public class AuthSuccessResponse
+    public class RefreshTokenRequest
     {
         public string Token { get; set; }
         public Guid RefreshToken { get; set; }

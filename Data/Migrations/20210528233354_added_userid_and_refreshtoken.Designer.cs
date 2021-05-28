@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventBookAPI.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210528134522_added userId to PageElement")]
-    partial class addeduserIdtoPageElement
+    [Migration("20210528233354_added_userid_and_refreshtoken")]
+    partial class added_userid_and_refreshtoken
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,37 @@ namespace EventBookAPI.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PageElements");
+                });
+
+            modelBuilder.Entity("EventBookAPI.Domain.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Token")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Invalidated")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("JwtId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Used")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -237,6 +268,15 @@ namespace EventBookAPI.Data.Migrations
                 });
 
             modelBuilder.Entity("EventBookAPI.Domain.PageElement", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EventBookAPI.Domain.RefreshToken", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()

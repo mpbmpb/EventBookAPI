@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using EventBookAPI.Domain;
 
@@ -7,5 +8,6 @@ namespace EventBookAPI.Services
     {
         Task<AuthenticationResult> RegisterAsync(string email, string password);
         Task<AuthenticationResult> LoginAsync(string email, string password);
+        Task<AuthenticationResult> RefreshTokenAsync(string token, Guid refreshToken);
     }
 }

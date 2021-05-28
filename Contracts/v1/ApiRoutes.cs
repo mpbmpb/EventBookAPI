@@ -19,6 +19,7 @@ namespace EventBookAPI.Contracts.v1
         {
             public const string Login = Base + "/" + nameof(Identity) + "/login";
             public const string Register = Base + "/" + nameof(Identity) + "/register";
+            public const string Refresh = Base + "/" + nameof(Identity) + "/refresh";
         }
     }
 }
