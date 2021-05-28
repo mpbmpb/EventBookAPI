@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventBookAPI.Data;
 using EventBookAPI.Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventBookAPI.Services
@@ -16,8 +17,15 @@ namespace EventBookAPI.Services
         {
             _dataContext = dataContext;
         }
-        
-        
+
+        public async Task<bool> CreatePageElementAsync(PageElement pageElement)
+        {
+            await _dataContext.PageElements.AddAsync(pageElement);
+
+            var created = await _dataContext.SaveChangesAsync();
+            return created > 0;
+        }
+
         public async Task<List<PageElement>> GetPageElementsAsync()
         {
             return await _dataContext.PageElements.ToListAsync();
@@ -28,33 +36,28 @@ namespace EventBookAPI.Services
             return await _dataContext.PageElements.SingleOrDefaultAsync(p => p.Id == Id);
         }
 
-        public async Task<bool> CreatePageElementAsync(PageElement pageElement)
-        {
-            await _dataContext.PageElements.AddAsync(pageElement);
-            
-            var created = await _dataContext.SaveChangesAsync();
-            return created > 0;
-        }
-
         public async Task<bool> UpdatePageElementAsync(PageElement pageElementToUpdate)
         {
             _dataContext.PageElements.Update(pageElementToUpdate);
-            
+
             var updated = await _dataContext.SaveChangesAsync();
-            return updated > 0 ;
+            return updated > 0;
         }
 
-        public async Task<bool> DeletePageElementAsync(Guid pageElementId)
+        public async Task<bool> DeletePageElementAsync(PageElement pageElement)
         {
-            var pageElement = await GetPageElementByIdAsync(pageElementId);
-
             if (pageElement is null)
                 return false;
-            
+
             _dataContext.PageElements.Remove(pageElement);
-            
+
             var deleted = await _dataContext.SaveChangesAsync();
             return deleted > 0;
+        }
+
+        public bool UserOwnsPageElement(PageElement pageElement, string userId)
+        {
+            return pageElement?.UserId == userId;
         }
     }
 }

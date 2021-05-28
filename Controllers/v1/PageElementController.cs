@@ -7,6 +7,7 @@ using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Domain;
+using EventBookAPI.Extensions;
 using EventBookAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -24,18 +25,14 @@ namespace EventBookAPI.Controllers.v1
             _pageElementService = pageElementService;
         }
 
-        [HttpGet(ApiRoutes.PageElements.GetAll)]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await _pageElementService.GetPageElementsAsync());
-        }
-
         [HttpPost(ApiRoutes.PageElements.Create)]
         public async Task<IActionResult> Create([FromBody] CreatePageElementRequest pageElementRequest)
         {
             var pageElement = new PageElement {
                 Content = pageElementRequest.Content, 
-                Classname = pageElementRequest.Classname};
+                Classname = pageElementRequest.Classname,
+                UserId = HttpContext.GetUserId()
+            };
 
             await _pageElementService.CreatePageElementAsync(pageElement);
 
@@ -53,6 +50,12 @@ namespace EventBookAPI.Controllers.v1
             return Created(locationUri, response);
         }
 
+        [HttpGet(ApiRoutes.PageElements.GetAll)]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _pageElementService.GetPageElementsAsync());
+        }
+
         [HttpGet(ApiRoutes.PageElements.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid pageElementId)
         {
@@ -65,15 +68,17 @@ namespace EventBookAPI.Controllers.v1
         }
 
         [HttpPut(ApiRoutes.PageElements.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid pageElementId, [FromBody] UpdatePageElementRequest pageElementRequest)
+        public async Task<IActionResult> Update([FromRoute] Guid pageElementId, [FromBody] UpdatePageElementRequest request)
         {
             var pageElement = await _pageElementService.GetPageElementByIdAsync(pageElementId);
-
-            if (pageElement is null)
+            var userOwnsPageElement =
+                _pageElementService.UserOwnsPageElement(pageElement, HttpContext.GetUserId());
+            
+            if (userOwnsPageElement is false)
                 return NotFound();
             
-            pageElement.Content = pageElementRequest.Content;
-            pageElement.Classname = pageElementRequest.Classname;
+            pageElement.Content = request.Content;
+            pageElement.Classname = request.Classname;
 
             var updated = await _pageElementService.UpdatePageElementAsync(pageElement);
 
@@ -85,8 +90,15 @@ namespace EventBookAPI.Controllers.v1
         
         [HttpDelete(ApiRoutes.PageElements.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid pageElementId)
-        {        
-            var deleted = await _pageElementService.DeletePageElementAsync(pageElementId);
+        {
+            var pageElement = await _pageElementService.GetPageElementByIdAsync(pageElementId);
+            var userOwnsPageElement =
+                _pageElementService.UserOwnsPageElement(pageElement, HttpContext.GetUserId());
+            
+            if (userOwnsPageElement is false)
+                return NotFound();
+            
+            var deleted = await _pageElementService.DeletePageElementAsync(pageElement);
             
             if (deleted)
                 return NoContent();

@@ -15,6 +15,8 @@ namespace EventBookAPI.Services
 
         Task<bool> UpdatePageElementAsync(PageElement pageElementToUpdate);
         
-        Task<bool> DeletePageElementAsync(Guid pageElementId);
+        Task<bool> DeletePageElementAsync(PageElement pageElement);
+
+        bool UserOwnsPageElement(PageElement pageElement, string userId);
     }
 }
