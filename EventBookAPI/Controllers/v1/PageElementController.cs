@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventBookAPI.Controllers.v1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PageElementController : Controller
     {
         private IPageElementService _pageElementService;
@@ -25,6 +24,7 @@ namespace EventBookAPI.Controllers.v1
             _pageElementService = pageElementService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost(ApiRoutes.PageElements.Create)]
         public async Task<IActionResult> Create([FromBody] CreatePageElementRequest pageElementRequest)
         {
@@ -67,6 +67,7 @@ namespace EventBookAPI.Controllers.v1
             return Ok(pageElement);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut(ApiRoutes.PageElements.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid pageElementId, [FromBody] UpdatePageElementRequest request)
         {
@@ -88,6 +89,7 @@ namespace EventBookAPI.Controllers.v1
             return NotFound(); 
         }
         
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete(ApiRoutes.PageElements.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid pageElementId)
         {
