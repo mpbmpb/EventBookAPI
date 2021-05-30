@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2a2ce47-20d2-4ba6-9435-44c4b3b52d7b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/IntegrationTestBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventBookAPI.sln" beforeDir="false" afterPath="$PROJECT_DIR$/EventBookAPI.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +60,6 @@
       <option value="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" />
       <option value="$PROJECT_DIR$/Extensions/GeneralExtensions.cs" />
       <option value="$PROJECT_DIR$/Domain/PageElement.cs" />
-      <option value="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" />
       <option value="$PROJECT_DIR$/Services/PageElementService.cs" />
       <option value="$PROJECT_DIR$/Services/IPageElementService.cs" />
       <option value="$PROJECT_DIR$/Contracts/v1/ApiRoutes.cs" />
@@ -78,8 +78,12 @@
       <option value="$PROJECT_DIR$/Installers/InstallerExtensions.cs" />
       <option value="$PROJECT_DIR$/Startup.cs" />
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/UnitTest1.cs" />
-      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/IntegrationTestBase.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbInitializer.cs" />
+      <option value="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sqZCTwNJqWOzGLWWPV8A86SmFB" />
@@ -166,7 +170,7 @@
       <workItem from="1621983550457" duration="72169000" />
       <workItem from="1622285436069" duration="12385000" />
       <workItem from="1622374136077" duration="38000" />
-      <workItem from="1622383325942" duration="3326000" />
+      <workItem from="1622383325942" duration="11150000" />
     </task>
     <servers />
   </component>
