@@ -90,13 +90,13 @@ namespace EventBookAPI.Services
 
         public async Task<AuthenticationResult> RefreshTokenAsync(string token, Guid refreshToken)
         {
-            var validatedToken = getPrincipalFromToken(token);
+            var claimsPrincipal = getPrincipalFromToken(token);
 
-            if (validatedToken is null)
+            if (claimsPrincipal is null)
                 return new AuthenticationResult {Errors = new[] {"Invalid Token"}};
 
             var expirationDateUnix =
-                long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
+                long.Parse(claimsPrincipal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
 
             var expirationDateTimeUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 .AddSeconds(expirationDateUnix);
@@ -104,7 +104,7 @@ namespace EventBookAPI.Services
             if (expirationDateTimeUtc > DateTime.UtcNow)
                 return new AuthenticationResult {Errors = new[] {"This token hasn't expired yet"}};
 
-            var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+            var jti = claimsPrincipal.FindFirst(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
 
             var storedRefreshToken =
                 await _dataContext.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
@@ -128,7 +128,7 @@ namespace EventBookAPI.Services
             _dataContext.RefreshTokens.Update(storedRefreshToken);
             await _dataContext.SaveChangesAsync();
 
-            var user = await _userManager.FindByIdAsync(validatedToken.Claims.Single(x => x.Type == "id").Value);
+            var user = await _userManager.FindByIdAsync(claimsPrincipal.FindFirst("id")?.Value);
             return await GenerateAuthenticationResultAsync(user);
         }
 
@@ -138,7 +138,9 @@ namespace EventBookAPI.Services
 
             try
             {
-                var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
+                var tokenValidationParameters = _tokenValidationParameters.Clone();
+                tokenValidationParameters.ValidateLifetime = false;
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
                 return IsJwtWithValidSecurityAlgorithm(validatedToken) ? principal : null;
             }
             catch
@@ -179,9 +181,10 @@ namespace EventBookAPI.Services
                 JwtId = token.Id,
                 UserId = user.Id,
                 CreationDate = DateTime.UtcNow,
-                ExpirationDate = DateTime.UtcNow.AddMonths(6)
+                ExpirationDate = DateTime.UtcNow.Add(_jwtSettings.RefreshTokenLifetime)
             };
-
+            
+            await RemoveOutdatedTokensAsync();
             await _dataContext.RefreshTokens.AddAsync(refreshToken);
             await _dataContext.SaveChangesAsync();
 
@@ -191,6 +194,15 @@ namespace EventBookAPI.Services
                 Token = tokenHandler.WriteToken(token),
                 RefreshToken = refreshToken.Token
             };
+        }
+
+        private async Task RemoveOutdatedTokensAsync()
+        {
+            var oldRefreshTokensToRemove = _dataContext.RefreshTokens
+                .Where(t => t.ExpirationDate < DateTime.UtcNow);
+            _dataContext.RefreshTokens.RemoveRange(oldRefreshTokensToRemove);
+
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

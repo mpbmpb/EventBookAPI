@@ -6,5 +6,6 @@ namespace EventBookAPI.Options
     {
         public string Secret { get; set; }
         public TimeSpan TokenLifetime { get; set; }
+        public TimeSpan RefreshTokenLifetime { get; set; }
     }
 }

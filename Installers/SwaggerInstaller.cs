@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -39,8 +40,7 @@ namespace EventBookAPI.Installers
                                 Id = "Bearer"  
                             }  
                         },  
-                        new string[] {}  
-  
+                        new List<string>()
                     }  
                 });  
             });

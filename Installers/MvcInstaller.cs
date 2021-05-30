@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using EventBookAPI.Data;
 using EventBookAPI.Options;
@@ -15,7 +16,7 @@ namespace EventBookAPI.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
-            
+
             var jwtSettings = new JwtSettings();
             configuration.Bind(nameof(JwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
@@ -34,7 +35,8 @@ namespace EventBookAPI.Installers
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 RequireExpirationTime = false,
-                ValidateLifetime = true
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
 
             services.AddSingleton(tokenValidationParameters);
