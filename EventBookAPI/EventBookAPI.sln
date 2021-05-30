@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBookAPI", "EventBookAPI.csproj", "{E590078A-FF16-4948-AB12-12409657DA4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBookAPI.Test", "..\EventBookAPI.Test\EventBookAPI.Test.csproj", "{35E796F0-AA54-4732-AA7F-1ACCF22111F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{E590078A-FF16-4948-AB12-12409657DA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E590078A-FF16-4948-AB12-12409657DA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E590078A-FF16-4948-AB12-12409657DA4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E796F0-AA54-4732-AA7F-1ACCF22111F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E796F0-AA54-4732-AA7F-1ACCF22111F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E796F0-AA54-4732-AA7F-1ACCF22111F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E796F0-AA54-4732-AA7F-1ACCF22111F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
