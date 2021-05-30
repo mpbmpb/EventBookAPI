@@ -5,58 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2a2ce47-20d2-4ba6-9435-44c4b3b52d7b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/.idea.EventBookAPI/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.idea.EventBookAPI/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.idea.EventBookAPI/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.idea.EventBookAPI/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.idea.EventBookAPI/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.idea.EventBookAPI/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/ApiRoutes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/ApiRoutes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Requests/CreatePageElementRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/CreatePageElementRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Requests/RefreshTokenRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/RefreshTokenRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Requests/UpdatePageElementRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UpdatePageElementRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Requests/UserLoginRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UserLoginRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Requests/UserRegistrationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Responses/AuthFailedResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Responses/AuthFailedResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Responses/AuthSuccessResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Responses/AuthSuccessResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contracts/v1/Responses/PageElementResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Responses/PageElementResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Controllers/v1/IdentityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Controllers/v1/PageElementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/DataContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/00000000000000_CreateIdentitySchema.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/00000000000000_CreateIdentitySchema.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/00000000000000_CreateIdentitySchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/00000000000000_CreateIdentitySchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/20210525182215_Initial.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/20210525182215_Initial.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/20210525182215_Initial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/20210525182215_Initial.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/20210528233354_added_userid_and_refreshtoken.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/20210528233354_added_userid_and_refreshtoken.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/20210528233354_added_userid_and_refreshtoken.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/20210528233354_added_userid_and_refreshtoken.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/20210529110922_added_refreshtokenlifetime_to_settings.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/20210529110922_added_refreshtokenlifetime_to_settings.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/20210529110922_added_refreshtokenlifetime_to_settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/20210529110922_added_refreshtokenlifetime_to_settings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Data/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domain/AuthenticationResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/AuthenticationResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domain/PageElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/PageElement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domain/RefreshToken.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/RefreshToken.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventBookAPI.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.sln" beforeDir="false" afterPath="$PROJECT_DIR$/EventBookAPI.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Extensions/GeneralExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Extensions/GeneralExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Installers/DbInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/DbInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Installers/IInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/IInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Installers/InstallerExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/InstallerExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Installers/MvcInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/MvcInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Installers/SwaggerInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/SwaggerInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Options/JwtSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Options/JwtSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Options/SwaggerOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Options/SwaggerOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Services/IIdentityService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IIdentityService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Services/IPageElementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IPageElementService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Services/IdentityService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IdentityService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Services/PageElementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PageElementService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app.db" beforeDir="false" afterPath="$PROJECT_DIR$/app.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app.db-shm" beforeDir="false" afterPath="$PROJECT_DIR$/app.db-shm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app.db-wal" beforeDir="false" afterPath="$PROJECT_DIR$/app.db-wal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/IntegrationTestBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventBookAPI.sln" beforeDir="false" afterPath="$PROJECT_DIR$/EventBookAPI.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,6 +77,9 @@
       <option value="$PROJECT_DIR$/Installers/SwaggerInstaller.cs" />
       <option value="$PROJECT_DIR$/Installers/InstallerExtensions.cs" />
       <option value="$PROJECT_DIR$/Startup.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/UnitTest1.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/IntegrationTestBase.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sqZCTwNJqWOzGLWWPV8A86SmFB" />
@@ -210,6 +166,7 @@
       <workItem from="1621983550457" duration="72169000" />
       <workItem from="1622285436069" duration="12385000" />
       <workItem from="1622374136077" duration="38000" />
+      <workItem from="1622383325942" duration="3326000" />
     </task>
     <servers />
   </component>
