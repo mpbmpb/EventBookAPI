@@ -1,8 +1,6 @@
 using System;
 using EventBookAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using FluentAssertions;
-using Xunit;
 
 namespace EventBookAPI.Test.Infrastructure
 {
@@ -23,6 +21,7 @@ namespace EventBookAPI.Test.Infrastructure
             _resultContext = new DataContext(options);
 
             _seedContext.Database.EnsureCreated();
+            
         }
 
         public void Dispose()
