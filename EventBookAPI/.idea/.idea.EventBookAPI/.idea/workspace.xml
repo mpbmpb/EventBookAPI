@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2a2ce47-20d2-4ba6-9435-44c4b3b52d7b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +165,8 @@
       <workItem from="1621983550457" duration="72169000" />
       <workItem from="1622285436069" duration="12385000" />
       <workItem from="1622374136077" duration="38000" />
-      <workItem from="1622383325942" duration="11150000" />
+      <workItem from="1622383325942" duration="11454000" />
+      <workItem from="1622405972425" duration="77000" />
     </task>
     <servers />
   </component>
