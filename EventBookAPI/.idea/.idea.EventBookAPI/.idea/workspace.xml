@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2a2ce47-20d2-4ba6-9435-44c4b3b52d7b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/IdentityControllerTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/IdentityControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/IdentityControllerTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +170,7 @@
       <workItem from="1622374136077" duration="38000" />
       <workItem from="1622383325942" duration="11454000" />
       <workItem from="1622405972425" duration="77000" />
-      <workItem from="1622406160213" duration="28083000" />
+      <workItem from="1622406160213" duration="29365000" />
     </task>
     <servers />
   </component>
@@ -189,33 +186,33 @@
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1061/1308" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1061/1308" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1061/1308" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="UnitTests.Controllers 85% 18/119" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1061/1308" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="UnitTests.Controllers 69% 45/146" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="UnitTests.Controllers 85% 18/119" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="IdentityControllerTests 0% 18/18" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1061/1308" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 61% 92/235" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="UnitTests.Controllers 69% 45/146" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="IdentityControllerTests 0% 45/45" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
       </expand>
       <select />
@@ -242,38 +239,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/v1/IdentityController.cs</url>
-          <line>49</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" initialLine="49" containingFunctionPresentation="method 'ResultBasedOn'">
-            <startOffsets>
-              <option value="1796" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1797" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/v1/IdentityController.cs</url>
-          <line>29</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" initialLine="29" containingFunctionPresentation="method 'Register'">
-            <startOffsets>
-              <option value="947" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1036" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

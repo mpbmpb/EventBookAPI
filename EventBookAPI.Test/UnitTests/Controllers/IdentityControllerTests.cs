@@ -26,13 +26,9 @@ namespace EventBookAPI.Test.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task Register_returns_AuthSuccessResponse_when_authorization_succeeds()
+        public async Task Register_returns_Ok_with_AuthSuccessResponse_when_authorization_succeeds()
         {
-            var request = new UserRegistrationRequest()
-            {
-                Email = "test@somewhere.com",
-                Password = "password1234!"
-            };
+            var request = new UserRegistrationRequest();
 
             var response = await _sut.Register(request);
 
@@ -41,21 +37,61 @@ namespace EventBookAPI.Test.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task Register_returns_BadRequest_when_authorization_fails()
+        public async Task Register_returns_BadRequest_with_AuthFailedResponse_when_authorization_fails()
         {
-            var request = new UserRegistrationRequest()
-            {
-                Email = "test",
-                Password = "password1234!"
-            };
+            var request = new UserRegistrationRequest();
             _identityService.ReturnsForAll(Task.Factory.StartNew(TestHelper.GetFailedAuthenticationResult));
 
             var response = await _sut.Register(request);
 
             response.Should().BeOfType<BadRequestObjectResult>();
+            response.As<BadRequestObjectResult>().Value.Should().BeAssignableTo<AuthFailedResponse>();
         }
 
+        [Fact]
+        public async Task Login_returns_Ok_with_AuthSuccessResponse_when_authorization_succeeds()
+        {
+            var request = new UserLoginRequest();
 
+            var response = await _sut.Login(request);
 
+            response.Should().BeOfType<OkObjectResult>();
+            response.As<OkObjectResult>().Value.Should().BeAssignableTo<AuthSuccessResponse>();
+        }
+        
+        [Fact]
+        public async Task Login_returns_BadRequest_with_AuthFailedResponse_when_authorization_fails()
+        {
+            var request = new UserLoginRequest();
+            _identityService.ReturnsForAll(Task.Factory.StartNew(TestHelper.GetFailedAuthenticationResult));
+
+            var response = await _sut.Login(request);
+
+            response.Should().BeOfType<BadRequestObjectResult>();
+            response.As<BadRequestObjectResult>().Value.Should().BeAssignableTo<AuthFailedResponse>();
+        }
+        
+        [Fact]
+        public async Task Refresh_returns_Ok_with_AuthSuccessResponse_when_authorization_succeeds()
+        {
+            var request = new RefreshTokenRequest();
+
+            var response = await _sut.Refresh(request);
+
+            response.Should().BeOfType<OkObjectResult>();
+            response.As<OkObjectResult>().Value.Should().BeAssignableTo<AuthSuccessResponse>();
+        }
+        
+        [Fact]
+        public async Task Refresh_returns_BadRequest_with_AuthFailedResponse_when_authorization_fails()
+        {
+            var request = new RefreshTokenRequest();
+            _identityService.ReturnsForAll(Task.Factory.StartNew(TestHelper.GetFailedAuthenticationResult));
+
+            var response = await _sut.Refresh(request);
+
+            response.Should().BeOfType<BadRequestObjectResult>();
+            response.As<BadRequestObjectResult>().Value.Should().BeAssignableTo<AuthFailedResponse>();
+        }
     }
 }
