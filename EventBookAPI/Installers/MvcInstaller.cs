@@ -22,12 +22,12 @@ namespace EventBookAPI.Installers
             services.AddSingleton(jwtSettings);
 
             services.AddScoped<IIdentityService, IdentityService>();
-            
-            services.AddDefaultIdentity<IdentityUser>(options => 
-                        options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<DataContext>()
-                    .AddDefaultTokenProviders();
-            
+
+            services.AddDefaultIdentity<IdentityUser>(options =>
+                    options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -40,20 +40,19 @@ namespace EventBookAPI.Installers
             };
 
             services.AddSingleton(tokenValidationParameters);
-            
+
             services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
                     // options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = tokenValidationParameters;
                 });
-            
         }
     }
 }

@@ -22,13 +22,11 @@ namespace EventBookAPI.Controllers.v1
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(new AuthFailedResponse
                 {
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(e => e.ErrorMessage))
                 });
-            }
-            
+
             var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
             return ResultBasedOn(authResponse);
         }
@@ -51,12 +49,10 @@ namespace EventBookAPI.Controllers.v1
         private IActionResult ResultBasedOn(AuthenticationResult authResponse)
         {
             if (authResponse.Success is false)
-            {
                 return BadRequest(new AuthFailedResponse
                 {
                     Errors = authResponse.Errors
                 });
-            }
 
             return Ok(new AuthSuccessResponse
             {

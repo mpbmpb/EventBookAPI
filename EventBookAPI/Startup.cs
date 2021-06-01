@@ -1,16 +1,10 @@
-using System;
-using System.Linq;
+using EventBookAPI.Installers;
+using EventBookAPI.Options;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using EventBookAPI.Data;
-using EventBookAPI.Installers;
-using EventBookAPI.Options;
 
 namespace EventBookAPI
 {
@@ -47,7 +41,7 @@ namespace EventBookAPI
 
             app.UseSwagger(options => { options.RouteTemplate = swaggerOptions.JsonRoute; });
             app.UseSwaggerUI(options => options.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description));
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

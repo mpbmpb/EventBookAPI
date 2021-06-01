@@ -1,5 +1,3 @@
-using System;
-
 namespace EventBookAPI.Contracts.v1.Requests
 {
     public class UpdatePageElementRequest
@@ -7,6 +5,5 @@ namespace EventBookAPI.Contracts.v1.Requests
         public string Content { get; set; }
 
         public string Classname { get; set; }
-
     }
 }
