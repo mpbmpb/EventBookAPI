@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2a2ce47-20d2-4ba6-9435-44c4b3b52d7b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/IdentityControllerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +34,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Controllers/TestController.cs" />
       <option value="$PROJECT_DIR$/Options/SwaggerOptions.cs" />
       <option value="$PROJECT_DIR$/Program.cs" />
       <option value="$PROJECT_DIR$/Controllers/ParagraphController.cs" />
@@ -56,7 +56,6 @@
       <option value="$PROJECT_DIR$/Contracts/v1/Responses/RegistrationResponse.cs" />
       <option value="$PROJECT_DIR$/Contracts/v1/Responses/AuthFailedResponse.cs" />
       <option value="$PROJECT_DIR$/Contracts/v1/Requests/UserLoginRequest.cs" />
-      <option value="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" />
       <option value="$PROJECT_DIR$/Extensions/GeneralExtensions.cs" />
       <option value="$PROJECT_DIR$/Domain/PageElement.cs" />
       <option value="$PROJECT_DIR$/Services/PageElementService.cs" />
@@ -81,9 +80,11 @@
       <option value="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" />
       <option value="$PROJECT_DIR$/Services/IdentityService.cs" />
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" />
-      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
-      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" />
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
+      <option value="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/IdentityControllerTests.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sqZCTwNJqWOzGLWWPV8A86SmFB" />
@@ -110,7 +111,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="RiderDotCoverContinuousTestingPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.EventBookAPI">
@@ -172,7 +173,7 @@
       <workItem from="1622374136077" duration="38000" />
       <workItem from="1622383325942" duration="11454000" />
       <workItem from="1622405972425" duration="77000" />
-      <workItem from="1622406160213" duration="21602000" />
+      <workItem from="1622406160213" duration="28083000" />
     </task>
     <servers />
   </component>
@@ -188,12 +189,33 @@
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 5% 1192/1255" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 5% 1192/1255" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 6% 171/182" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="UnitTests.Controllers 85% 18/119" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 19% 1034/1281" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 69% 65/208" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="UnitTests.Controllers 85% 18/119" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="IdentityControllerTests 0% 18/18" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
       </expand>
       <select />
@@ -220,6 +242,38 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/v1/IdentityController.cs</url>
+          <line>49</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" initialLine="49" containingFunctionPresentation="method 'ResultBasedOn'">
+            <startOffsets>
+              <option value="1796" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1797" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/v1/IdentityController.cs</url>
+          <line>29</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" initialLine="29" containingFunctionPresentation="method 'Register'">
+            <startOffsets>
+              <option value="947" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1036" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
