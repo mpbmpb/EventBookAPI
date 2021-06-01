@@ -14,7 +14,7 @@ namespace EventBookAPI.Test.Infrastructure
 {
     public class IntegrationTestBase
     {
-        private readonly IServiceProvider _serviceProvider;
+        protected readonly IServiceProvider _serviceProvider;
         protected readonly HttpClient TestClient;
 
         public IntegrationTestBase()
