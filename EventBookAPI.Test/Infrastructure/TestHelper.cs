@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EventBookAPI.Data;
 using EventBookAPI.Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventBookAPI.Test.Infrastructure
@@ -52,5 +54,32 @@ namespace EventBookAPI.Test.Infrastructure
         {
             return $"0153a680-c026-4472-a200-de23{number.ToString("X8")}";
         }
+
+        public static ControllerContext GetMockControllerContext()
+        {
+            var mockControllerContext = new ControllerContext();
+            mockControllerContext.HttpContext = new DefaultHttpContext();
+            mockControllerContext.HttpContext.Request.Scheme = "https";
+            mockControllerContext.HttpContext.Request.Host = new("localhost", 5001);
+            mockControllerContext.HttpContext.User = new(
+                new ClaimsIdentity(new[]
+                {
+                    new Claim("id", TestHelper.GuidIdString(1))
+                }));
+
+            return mockControllerContext;
+        }
+
+        public static AuthenticationResult GetPositiveAuthenticationResult()
+        {
+            return new AuthenticationResult
+            {
+                Success = true,
+                Token = TestHelper.GuidIdString(42),
+                RefreshToken = GuidIndex(101)
+            };
+        }
+
+        public static AuthenticationResult GetFailedAuthenticationResult() => new();
     }
 }

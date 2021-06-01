@@ -13,7 +13,6 @@ namespace EventBookAPI.Test.Infrastructure
         protected readonly DataContext _resultContext;
         protected readonly DataContext _seedContext;
         protected readonly ControllerContext _mockControllerContext;
-        private bool _disposed;
 
         public UnitTestBase()
         {
@@ -27,15 +26,7 @@ namespace EventBookAPI.Test.Infrastructure
 
             _seedContext.Database.EnsureCreated();
 
-            _mockControllerContext = new();
-            _mockControllerContext.HttpContext = new DefaultHttpContext();
-            _mockControllerContext.HttpContext.Request.Scheme = "https";
-            _mockControllerContext.HttpContext.Request.Host = new("localhost", 5001);
-            _mockControllerContext.HttpContext.User = new(
-                new ClaimsIdentity(new[]
-                {
-                    new Claim("id", TestHelper.GuidIdString(1))
-                }));
+            _mockControllerContext = TestHelper.GetMockControllerContext();
         }
 
         public void Dispose()
