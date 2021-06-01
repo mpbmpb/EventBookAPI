@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
@@ -17,7 +14,7 @@ namespace EventBookAPI.Controllers.v1
 {
     public class PageElementController : Controller
     {
-        private IPageElementService _pageElementService;
+        private readonly IPageElementService _pageElementService;
 
         public PageElementController(IPageElementService pageElementService)
         {
@@ -28,8 +25,9 @@ namespace EventBookAPI.Controllers.v1
         [HttpPost(ApiRoutes.PageElements.Create)]
         public async Task<IActionResult> Create([FromBody] CreatePageElementRequest pageElementRequest)
         {
-            var pageElement = new PageElement {
-                Content = pageElementRequest.Content, 
+            var pageElement = new PageElement
+            {
+                Content = pageElementRequest.Content,
                 Classname = pageElementRequest.Classname,
                 UserId = HttpContext.GetUserId()
             };
@@ -37,13 +35,13 @@ namespace EventBookAPI.Controllers.v1
             await _pageElementService.CreatePageElementAsync(pageElement);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + "/" + 
+            var locationUri = baseUrl + "/" +
                               ApiRoutes.PageElements.Get.Replace("{pageElementId}", pageElement.Id.ToString());
 
             var response = new PageElementResponse
             {
-                Id = pageElement.Id, 
-                Content = pageElement.Content, 
+                Id = pageElement.Id,
+                Content = pageElement.Content,
                 Classname = pageElement.Classname
             };
 
@@ -63,21 +61,22 @@ namespace EventBookAPI.Controllers.v1
 
             if (pageElement is null)
                 return NotFound();
-            
+
             return Ok(pageElement);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut(ApiRoutes.PageElements.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid pageElementId, [FromBody] UpdatePageElementRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid pageElementId,
+            [FromBody] UpdatePageElementRequest request)
         {
             var pageElement = await _pageElementService.GetPageElementByIdAsync(pageElementId);
             var userOwnsPageElement =
                 _pageElementService.UserOwnsPageElement(pageElement, HttpContext.GetUserId());
-            
+
             if (userOwnsPageElement is false)
                 return NotFound();
-            
+
             pageElement.Content = request.Content;
             pageElement.Classname = request.Classname;
 
@@ -85,10 +84,10 @@ namespace EventBookAPI.Controllers.v1
 
             if (updated)
                 return Ok(pageElement);
-            
-            return NotFound(); 
+
+            return NotFound();
         }
-        
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete(ApiRoutes.PageElements.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid pageElementId)
@@ -96,12 +95,12 @@ namespace EventBookAPI.Controllers.v1
             var pageElement = await _pageElementService.GetPageElementByIdAsync(pageElementId);
             var userOwnsPageElement =
                 _pageElementService.UserOwnsPageElement(pageElement, HttpContext.GetUserId());
-            
+
             if (userOwnsPageElement is false)
                 return NotFound();
-            
+
             var deleted = await _pageElementService.DeletePageElementAsync(pageElement);
-            
+
             if (deleted)
                 return NoContent();
 

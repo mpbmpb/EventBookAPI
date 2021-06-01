@@ -10,7 +10,7 @@ namespace EventBookAPI.Data
             : base(options)
         {
         }
-        
+
         public DbSet<PageElement> PageElements { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
     }

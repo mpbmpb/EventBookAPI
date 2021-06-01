@@ -1,23 +1,21 @@
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
+using EventBookAPI.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using EventBookAPI.Data;
 
 namespace EventBookAPI.Test.Infrastructure
 {
     public class IntegrationTestBase
     {
-        protected readonly HttpClient TestClient;
         private readonly IServiceProvider _serviceProvider;
+        protected readonly HttpClient TestClient;
 
         public IntegrationTestBase()
         {
@@ -30,20 +28,20 @@ namespace EventBookAPI.Test.Infrastructure
                         services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("TestDb"); });
                     });
                 });
-            
+
             _serviceProvider = appFactory.Services;
             TestClient = appFactory.CreateClient();
         }
-        
+
         protected async Task AuthenticateAsync()
         {
-            TestClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetJwtAsync());
+            TestClient.DefaultRequestHeaders.Authorization = new("bearer", await GetJwtAsync());
         }
 
         protected async Task<PageElementResponse> CreatePageElementAsync(CreatePageElementRequest request)
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
-            return (await response.Content.ReadAsAsync<PageElementResponse>());
+            return await response.Content.ReadAsAsync<PageElementResponse>();
         }
 
         private async Task<string> GetJwtAsync()

@@ -13,14 +13,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EventBookAPI.Services
 {
-    public class IdentityService : IIdentityService    
+    public class IdentityService : IIdentityService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly DataContext _dataContext;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
-        private readonly DataContext _dataContext;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, 
+        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings,
             TokenValidationParameters tokenValidationParameters, DataContext dataContext)
         {
             _userManager = userManager;
@@ -28,18 +28,16 @@ namespace EventBookAPI.Services
             _tokenValidationParameters = tokenValidationParameters;
             _dataContext = dataContext;
         }
-        
+
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
             var existingUser = await _userManager.FindByEmailAsync(email);
 
             if (existingUser is not null)
-            {
-                return new AuthenticationResult
+                return new()
                 {
                     Errors = new[] {"User with this email address already exists"}
                 };
-            }
 
             var newUser = new IdentityUser
             {
@@ -50,15 +48,10 @@ namespace EventBookAPI.Services
             var createdUser = await _userManager.CreateAsync(newUser, password);
 
             if (!createdUser.Succeeded)
-            {
-                return new AuthenticationResult
+                return new()
                 {
-                    Errors = createdUser.Errors.Select(x =>
-                    {
-                        return x.Description;
-                    })
+                    Errors = createdUser.Errors.Select(x => { return x.Description; })
                 };
-            }
 
             return await GenerateAuthenticationResultAsync(newUser);
         }
@@ -68,22 +61,18 @@ namespace EventBookAPI.Services
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)
-            {
-                return new AuthenticationResult
+                return new()
                 {
                     Errors = new[] {"User does not exist"}
                 };
-            }
 
             var userHasValidPassword = await _userManager.CheckPasswordAsync(user, password);
 
             if (!userHasValidPassword)
-            {
-                return new AuthenticationResult
+                return new()
                 {
                     Errors = new[] {"User/password combination is not correct"}
                 };
-            }
 
             return await GenerateAuthenticationResultAsync(user);
         }
@@ -93,7 +82,7 @@ namespace EventBookAPI.Services
             var claimsPrincipal = getPrincipalFromToken(token);
 
             if (claimsPrincipal is null)
-                return new AuthenticationResult {Errors = new[] {"Invalid Token"}};
+                return new() {Errors = new[] {"Invalid Token"}};
 
             var expirationDateUnix =
                 long.Parse(claimsPrincipal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
@@ -102,7 +91,7 @@ namespace EventBookAPI.Services
                 .AddSeconds(expirationDateUnix);
 
             if (expirationDateTimeUtc > DateTime.UtcNow)
-                return new AuthenticationResult {Errors = new[] {"This token hasn't expired yet"}};
+                return new() {Errors = new[] {"This token hasn't expired yet"}};
 
             var jti = claimsPrincipal.FindFirst(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
 
@@ -110,19 +99,19 @@ namespace EventBookAPI.Services
                 await _dataContext.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
 
             if (storedRefreshToken is null)
-                return new AuthenticationResult {Errors = new[] {"This refresh token does not exist"}};
-            
+                return new() {Errors = new[] {"This refresh token does not exist"}};
+
             if (DateTime.UtcNow > storedRefreshToken.ExpirationDate)
-                return new AuthenticationResult {Errors = new[] {"This refresh token has expired"}};
-            
+                return new() {Errors = new[] {"This refresh token has expired"}};
+
             if (storedRefreshToken.Invalidated)
-                return new AuthenticationResult {Errors = new[] {"This refresh token has been invalidated"}};
-            
+                return new() {Errors = new[] {"This refresh token has been invalidated"}};
+
             if (storedRefreshToken.Used)
-                return new AuthenticationResult {Errors = new[] {"This refresh token has been used"}};
+                return new() {Errors = new[] {"This refresh token has been used"}};
 
             if (storedRefreshToken.JwtId != jti)
-                return new AuthenticationResult {Errors = new[] {"This refresh token does not match this JWT"}};
+                return new() {Errors = new[] {"This refresh token does not match this JWT"}};
 
             storedRefreshToken.Used = true;
             _dataContext.RefreshTokens.Update(storedRefreshToken);
@@ -151,7 +140,7 @@ namespace EventBookAPI.Services
 
         private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
         {
-            return (validatedToken is JwtSecurityToken jwtSecurityToken) &&
+            return validatedToken is JwtSecurityToken jwtSecurityToken &&
                    jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                        StringComparison.InvariantCultureIgnoreCase);
         }
@@ -162,7 +151,7 @@ namespace EventBookAPI.Services
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
+                Subject = new(new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -170,7 +159,7 @@ namespace EventBookAPI.Services
                     new Claim("id", user.Id)
                 }),
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
-                SigningCredentials = new SigningCredentials(
+                SigningCredentials = new(
                     new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -183,12 +172,12 @@ namespace EventBookAPI.Services
                 CreationDate = DateTime.UtcNow,
                 ExpirationDate = DateTime.UtcNow.Add(_jwtSettings.RefreshTokenLifetime)
             };
-            
+
             await RemoveOutdatedTokensAsync();
             await _dataContext.RefreshTokens.AddAsync(refreshToken);
             await _dataContext.SaveChangesAsync();
 
-            return new AuthenticationResult
+            return new()
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token),
