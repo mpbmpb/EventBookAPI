@@ -10,9 +10,10 @@ namespace EventBookAPI.Test.Infrastructure
     public class UnitTestBase : IDisposable
     {
         protected readonly DataContext _context;
-        protected readonly ControllerContext _controllerContext;
         protected readonly DataContext _resultContext;
         protected readonly DataContext _seedContext;
+        protected readonly ControllerContext _mockControllerContext;
+        private bool _disposed;
 
         public UnitTestBase()
         {
@@ -26,14 +27,14 @@ namespace EventBookAPI.Test.Infrastructure
 
             _seedContext.Database.EnsureCreated();
 
-            _controllerContext = new();
-            _controllerContext.HttpContext = new DefaultHttpContext();
-            _controllerContext.HttpContext.Request.Scheme = "https";
-            _controllerContext.HttpContext.Request.Host = new("localhost", 5001);
-            _controllerContext.HttpContext.User = new(
+            _mockControllerContext = new();
+            _mockControllerContext.HttpContext = new DefaultHttpContext();
+            _mockControllerContext.HttpContext.Request.Scheme = "https";
+            _mockControllerContext.HttpContext.Request.Host = new("localhost", 5001);
+            _mockControllerContext.HttpContext.User = new(
                 new ClaimsIdentity(new[]
                 {
-                    new Claim("id", TestDbHelper.GuidIdString(1))
+                    new Claim("id", TestHelper.GuidIdString(1))
                 }));
         }
 
@@ -46,6 +47,7 @@ namespace EventBookAPI.Test.Infrastructure
             _seedContext?.Dispose();
             _context?.Dispose();
             _resultContext?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
