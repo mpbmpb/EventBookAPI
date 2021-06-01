@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventBookAPI.Data;
 using EventBookAPI.Domain;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EventBookAPI.Test.Infrastructure
 {
-    public static class TestDbHelper
+    public static class TestHelper
     {
-        public static async Task SeedAsync(DataContext context)
+        public static async Task SeedDbAsync(DataContext context)
         {
             if (context.PageElements.Any())
                 return;
@@ -20,13 +21,15 @@ namespace EventBookAPI.Test.Infrastructure
             for (var i = 1; i < 4; i++)
                 pageElements.Add(new()
                 {
-                    Id = GuidIndex(i), Content = $"SeedContent{i}", Classname = $"SeedClassname{i}"
+                    Id = GuidIndex(i), 
+                    Content = $"SeedContent{i}", 
+                    Classname = $"SeedClassname{i}", 
+                    UserId = GuidIdString(1)
                 });
 
             context.AddRange(pageElements);
             await context.SaveChangesAsync();
         }
-
         public static Guid GuidIndex(int number)
         {
             return Guid.Parse($"fcebe99a-d958-4b38-8ab6-568d{number.ToString("X8")}");

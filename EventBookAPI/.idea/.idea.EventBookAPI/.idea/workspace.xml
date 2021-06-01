@@ -5,32 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2a2ce47-20d2-4ba6-9435-44c4b3b52d7b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/EventBookAPI.Test.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/IntegrationTestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/IntegrationTestBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventBookAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts/v1/Requests/CreatePageElementRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/CreatePageElementRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts/v1/Requests/UpdatePageElementRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UpdatePageElementRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts/v1/Requests/UserRegistrationRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/IdentityController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/DataContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/PageElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/PageElement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/RefreshToken.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/RefreshToken.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Extensions/GeneralExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Extensions/GeneralExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Installers/InstallerExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/InstallerExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Installers/MvcInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/MvcInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Installers/SwaggerInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Installers/SwaggerInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Options/SwaggerOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Options/SwaggerOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/IPageElementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IPageElementService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/IdentityService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IdentityService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/PageElementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PageElementService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.db" beforeDir="false" afterPath="$PROJECT_DIR$/app.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +27,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2EF6561A-D0E9-4041-94EF-EDAA489D28EE/6b/41cd409e/IDisposable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2EF6561A-D0E9-4041-94EF-EDAA489D28EE/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7DADE0E0-07C4-4809-AAC9-1B78E77954E9/1D/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -101,8 +80,9 @@
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbInitializer.cs" />
       <option value="$PROJECT_DIR$/Controllers/v1/PageElementController.cs" />
       <option value="$PROJECT_DIR$/Services/IdentityService.cs" />
-      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestDbHelper.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/UnitTestBase.cs" />
+      <option value="$PROJECT_DIR$/../EventBookAPI.Test/Infrastructure/TestHelper.cs" />
       <option value="$PROJECT_DIR$/../EventBookAPI.Test/UnitTests/Controllers/PageElementControllerTests.cs" />
     </changedPaths>
   </component>
@@ -192,7 +172,7 @@
       <workItem from="1622374136077" duration="38000" />
       <workItem from="1622383325942" duration="11454000" />
       <workItem from="1622405972425" duration="77000" />
-      <workItem from="1622406160213" duration="11692000" />
+      <workItem from="1622406160213" duration="21602000" />
     </task>
     <servers />
   </component>
@@ -208,12 +188,12 @@
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 7% 1103/1185" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 5% 1192/1255" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 7% 1103/1185" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="EventBookAPI.Test 27% 82/112" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 5% 1192/1255" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="EventBookAPI.Test 6% 171/182" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
       </expand>
       <select />
