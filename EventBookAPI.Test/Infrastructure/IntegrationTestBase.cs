@@ -5,6 +5,7 @@ using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Data;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace EventBookAPI.Test.Infrastructure
     {
         protected readonly IServiceProvider _serviceProvider;
         protected readonly HttpClient TestClient;
+        protected WebApplicationFactory<Startup> _factory;
 
         public IntegrationTestBase()
         {
@@ -28,9 +30,9 @@ namespace EventBookAPI.Test.Infrastructure
                         services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("TestDb"); });
                     });
                 });
-
-            _serviceProvider = appFactory.Services;
             TestClient = appFactory.CreateClient();
+            _serviceProvider = appFactory.Services;
+            _factory = appFactory;
         }
 
         protected async Task AuthenticateAsync()
@@ -56,11 +58,14 @@ namespace EventBookAPI.Test.Infrastructure
             return registrationResponse.Token;
         }
 
+        // TODO Implement IDisposable without identityServerTests failing due to 'no such table: AspNetUsers'
         public void Dispose()
         {
             using var serviceScope = _serviceProvider.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<DataContext>();
             context?.Database.EnsureDeleted();
+            // context?.Dispose();
+            // GC.SuppressFinalize(this);
         }
     }
 }

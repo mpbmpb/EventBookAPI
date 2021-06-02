@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using EventBookAPI.Domain;
 using EventBookAPI.Options;
@@ -14,20 +15,38 @@ namespace EventBookAPI.Test.IntegrationTests.Services
 {
     public class IdentityServiceTests : IntegrationTestBase
     {
-        private readonly IdentityService _sut;
+        private IIdentityService _sut;
 
         public IdentityServiceTests()
         {
-            _sut = _serviceProvider.GetService<IdentityService>();
         }
 
         [Fact]
         public async Task RegisterAsync_returns_authenticationResult_with_tokens_when_given_unique_user()
         {
-            var result = await _sut.RegisterAsync("test@mailbox.com", "Password42!");
-
+            using var scope = _serviceProvider.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            
+            var result = await _sut.RegisterAsync($"{Guid.NewGuid().ToString()}@integration.com", "Password42!");
+            
             result.Should().BeOfType<AuthenticationResult>();
+            result.As<AuthenticationResult>().Token.Should().NotBeNullOrEmpty();
+            result.As<AuthenticationResult>().RefreshToken.Should().NotBeEmpty();
         }
+
+        [Fact]
+        public async Task RegisterAsync_returns_failed_authenticationResult_when_password_violates_requirements()
+        {
+            using var scope = _factory.Services.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            
+            var result = await _sut.RegisterAsync("test@email.nl", "Password42");
+            
+            result.Should().BeOfType<AuthenticationResult>();
+            result.As<AuthenticationResult>().Success.Should().BeFalse();
+            result.As<AuthenticationResult>().Errors.Should().NotBeEmpty();    
+        }
+
 
     }
 }

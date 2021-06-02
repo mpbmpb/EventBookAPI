@@ -138,19 +138,6 @@ namespace EventBookAPI.Test.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task Update_correctly_updates_pageElement()
-        {
-            await TestHelper.SeedDbAsync(_seedContext);
-            var request = new UpdatePageElementRequest {Content = "Changed", Classname = "ChangedClass"};
-
-            var response = await _sut.Update(TestHelper.GuidIndex(1), request);
-            var result = response.As<OkObjectResult>().Value.As<PageElement>();
-
-            result.Content.Should().Match(request.Content);
-            result.Classname.Should().Match(request.Classname);
-        }
-        
-        [Fact]
         public async Task Update_returns_NotFound_when_id_doesnt_exist()
         {
             var request = new UpdatePageElementRequest {Content = "Changed", Classname = "ChangedClass"};
@@ -159,7 +146,7 @@ namespace EventBookAPI.Test.UnitTests.Controllers
 
             result.Should().BeAssignableTo<NotFoundResult>();
         }
-        
+
         [Fact]
         public async Task Update_returns_NotFound_when_user_doesnt_own_pageElement()
         {
@@ -177,6 +164,19 @@ namespace EventBookAPI.Test.UnitTests.Controllers
         }
 
         [Fact]
+        public async Task Update_correctly_updates_pageElement()
+        {
+            await TestHelper.SeedDbAsync(_seedContext);
+            var request = new UpdatePageElementRequest {Content = "Changed", Classname = "ChangedClass"};
+
+            var response = await _sut.Update(TestHelper.GuidIndex(1), request);
+            var result = response.As<OkObjectResult>().Value.As<PageElement>();
+
+            result.Content.Should().Match(request.Content);
+            result.Classname.Should().Match(request.Classname);
+        }
+
+        [Fact]
         public async Task Delete_returns_correct_response()
         {
             await TestHelper.SeedDbAsync(_seedContext);
@@ -186,19 +186,6 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             response.Should().BeAssignableTo<NoContentResult>();
         }
 
-        [Fact]
-        public async Task Delete_correctly_removes_pageElement_from_db()
-        {
-            await TestHelper.SeedDbAsync(_seedContext);
-
-            await _sut.Delete(TestHelper.GuidIndex(1));
-
-            var result = _resultContext.PageElements;
-
-            result.Count().Should().Be(2);
-            result.FirstOrDefault()?.Content.Should().Match("SeedContent2");
-        }
-        
         [Fact]
         public async Task Delete_returns_NotFound_when_id_doesnt_exist()
         {
@@ -221,6 +208,20 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             var result = await _sut.Delete(TestHelper.GuidIndex(1));
 
             result.Should().BeAssignableTo<NotFoundResult>();
+        }
+
+        [Fact]
+        public async Task Delete_correctly_removes_pageElement_from_db()
+        {
+            await TestHelper.SeedDbAsync(_seedContext);
+
+            await _sut.Delete(TestHelper.GuidIndex(1));
+
+            var result = _resultContext.PageElements
+                .FirstOrDefault(x => x.Id == TestHelper.GuidIndex(1) );
+
+            _resultContext.PageElements.Count().Should().Be(2);
+            result.Should().BeNull();
         }
     }
 }

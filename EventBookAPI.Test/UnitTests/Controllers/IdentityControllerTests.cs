@@ -2,11 +2,19 @@ using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Controllers.v1;
+using EventBookAPI.Data;
 using EventBookAPI.Domain;
+using EventBookAPI.Options;
 using EventBookAPI.Services;
 using EventBookAPI.Test.Infrastructure;
 using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Tokens;
 using NSubstitute;
 using NSubstitute.Extensions;
 using Xunit;
@@ -47,6 +55,28 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             response.Should().BeOfType<BadRequestObjectResult>();
             response.As<BadRequestObjectResult>().Value.Should().BeAssignableTo<AuthFailedResponse>();
         }
+
+        // [Fact]
+        // public async Task Register_returns_BadRequest_with_AuthFailedResponse_when_given_bad_email()
+        // {
+        //     using var appFactory = new WebApplicationFactory<Startup>()
+        //         .WithWebHostBuilder(builder =>
+        //         {
+        //             builder.ConfigureServices(services =>
+        //             {
+        //                 services.RemoveAll(typeof(DataContext));
+        //                 services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("TestDb"); });
+        //             });
+        //         });
+        //     var testClient = appFactory.CreateClient();
+        //     var request = new UserRegistrationRequest{Email = "test", Password = "Password42!"};
+        //
+        //     var response = await _sut.Register(request);
+        //
+        //     response.Should().BeOfType<BadRequestObjectResult>();
+        //     response.As<BadRequestObjectResult>().Value.Should().BeAssignableTo<AuthFailedResponse>();
+        // }
+
 
         [Fact]
         public async Task Login_returns_Ok_with_AuthSuccessResponse_when_authorization_succeeds()
