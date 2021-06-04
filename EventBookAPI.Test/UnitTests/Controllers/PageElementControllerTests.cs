@@ -198,7 +198,6 @@ namespace EventBookAPI.Test.UnitTests.Controllers
         public async Task Delete_returns_NotFound_when_user_doesnt_own_pageElement()
         {
             await TestHelper.SeedDbAsync(_seedContext);
-            var request = new UpdatePageElementRequest {Content = "Changed", Classname = "ChangedClass"};
             _sut.ControllerContext.HttpContext.User = new(
                 new ClaimsIdentity(new[]
                 {

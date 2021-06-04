@@ -1,19 +1,23 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Data;
+using EventBookAPI.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EventBookAPI.Test.Infrastructure
 {
-    public class IntegrationTestBase
+    public class IntegrationTestBase : IDisposable
     {
         protected readonly IServiceProvider _serviceProvider;
         protected readonly HttpClient TestClient;
@@ -27,7 +31,15 @@ namespace EventBookAPI.Test.Infrastructure
                     builder.ConfigureServices(services =>
                     {
                         services.RemoveAll(typeof(DataContext));
-                        services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("TestDb"); });
+                        services.AddDbContext<DataContext>(options => 
+                            { options.UseInMemoryDatabase("TestDb"); });
+
+                        var serviceProvider = services.BuildServiceProvider();
+                        using (var scope = serviceProvider.CreateScope())
+                        {
+                            var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+                            dbContext.Database.EnsureCreated();
+                        }
                     });
                 });
             TestClient = appFactory.CreateClient();
@@ -40,11 +52,8 @@ namespace EventBookAPI.Test.Infrastructure
             TestClient.DefaultRequestHeaders.Authorization = new("bearer", await GetJwtAsync());
         }
 
-        protected async Task<PageElementResponse> CreatePageElementAsync(CreatePageElementRequest request)
-        {
-            var response = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
-            return await response.Content.ReadAsAsync<PageElementResponse>();
-        }
+        protected async Task<HttpResponseMessage> PostAsync<T>(Uri uri) 
+            => await TestClient.PostAsJsonAsync(uri, typeof(T));
 
         private async Task<string> GetJwtAsync()
         {
@@ -58,14 +67,13 @@ namespace EventBookAPI.Test.Infrastructure
             return registrationResponse.Token;
         }
 
-        // TODO Implement IDisposable without identityServerTests failing due to 'no such table: AspNetUsers'
         public void Dispose()
         {
             using var serviceScope = _serviceProvider.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<DataContext>();
             context?.Database.EnsureDeleted();
-            // context?.Dispose();
-            // GC.SuppressFinalize(this);
+            context?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
