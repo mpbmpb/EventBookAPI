@@ -3,12 +3,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1.Responses;
+using EventBookAPI.Data;
 using EventBookAPI.Domain;
 using EventBookAPI.Options;
 using EventBookAPI.Services;
 using EventBookAPI.Test.Infrastructure;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using NSubstitute;
@@ -51,11 +53,11 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             using var scope = _serviceProvider.CreateScope();
             _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
             var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
-            var tokenLifeTimeInMs = 10;
-            jwtSettings.TokenLifetime = TimeSpan.FromMilliseconds(tokenLifeTimeInMs);
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
             
             var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
-            await Task.Delay(tokenLifeTimeInMs);
+            await Task.Delay(shortLifeTime);
             var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
             
             result.Token.Should().NotBeNullOrEmpty();
@@ -158,11 +160,11 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             using var scope = _serviceProvider.CreateScope();
             _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
             var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
-            var tokenLifeTimeInMs = 10;
-            jwtSettings.TokenLifetime = TimeSpan.FromMilliseconds(tokenLifeTimeInMs);
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
             
             var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
-            await Task.Delay(tokenLifeTimeInMs);
+            await Task.Delay(shortLifeTime);
             var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
             
             result.Token.Should().NotBeNullOrEmpty();
@@ -231,11 +233,11 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             using var scope = _serviceProvider.CreateScope();
             _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
             var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
-            var tokenLifeTimeInMs = 10;
-            jwtSettings.TokenLifetime = TimeSpan.FromMilliseconds(tokenLifeTimeInMs);
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
             
             var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
-            await Task.Delay(tokenLifeTimeInMs);
+            await Task.Delay(shortLifeTime);
             var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
             
             result.Token.Should().NotBeNullOrEmpty();
@@ -281,6 +283,122 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
 
             result.Errors.Should().BeEquivalentTo(expectedErrors);
+        }
+
+        [Fact]
+        public async Task RefreshAsync_returns_failed_result_when_refreshToken_doesnt_exist()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
+            var expectedErrors = new[] {"This refresh token does not exist"};
+            
+            var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
+            await Task.Delay(shortLifeTime);
+            var result = await _sut.RefreshTokenAsync(authResult.Token, Guid.NewGuid());
+
+            result.Success.Should().BeFalse();
+            result.Errors.Should().BeEquivalentTo(expectedErrors);
+            result.Token.Should().BeNull();
+            result.RefreshToken.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task RefreshAsync_returns_failed_result_when_refreshToken_has_expired()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
+            jwtSettings.RefreshTokenLifetime = shortLifeTime;
+            var expectedErrors = new[] {"This refresh token has expired"};
+            
+            var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
+            await Task.Delay(shortLifeTime);
+            var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
+
+            result.Success.Should().BeFalse();
+            result.Errors.Should().BeEquivalentTo(expectedErrors);
+            result.Token.Should().BeNull();
+            result.RefreshToken.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task RefreshAsync_returns_failed_result_when_refreshToken_is_invalidated()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
+            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+            var expectedErrors = new[] {"This refresh token has been invalidated"};
+            
+            var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
+            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync();
+            refreshToken.Invalidated = true;
+            await context.SaveChangesAsync();
+            
+            await Task.Delay(shortLifeTime);
+            var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
+
+            result.Success.Should().BeFalse();
+            result.Errors.Should().BeEquivalentTo(expectedErrors);
+            result.Token.Should().BeNull();
+            result.RefreshToken.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task RefreshAsync_returns_failed_result_when_refreshToken_has_been_used()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
+            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+            var expectedErrors = new[] {"This refresh token has been used"};
+            
+            var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
+            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync();
+            refreshToken.Used = true;
+            await context.SaveChangesAsync();
+            
+            await Task.Delay(shortLifeTime);
+            var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
+
+            result.Success.Should().BeFalse();
+            result.Errors.Should().BeEquivalentTo(expectedErrors);
+            result.Token.Should().BeNull();
+            result.RefreshToken.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task RefreshAsync_returns_failed_result_when_refreshToken_doesnt_belong_to_token()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+            var jwtSettings = scope.ServiceProvider.GetRequiredService<JwtSettings>();
+            var shortLifeTime = TimeSpan.FromMilliseconds(10);
+            jwtSettings.TokenLifetime = shortLifeTime;
+            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+            var expectedErrors = new[] {"This refresh token does not match this JWT"};
+            
+            var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
+            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync();
+            refreshToken.JwtId = "wrongId";
+            await context.SaveChangesAsync();
+            
+            await Task.Delay(shortLifeTime);
+            var result = await _sut.RefreshTokenAsync(authResult.Token, authResult.RefreshToken);
+
+            result.Success.Should().BeFalse();
+            result.Errors.Should().BeEquivalentTo(expectedErrors);
+            result.Token.Should().BeNull();
+            result.RefreshToken.Should().BeEmpty();
         }
 
 
