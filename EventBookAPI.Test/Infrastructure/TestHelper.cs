@@ -17,10 +17,22 @@ namespace EventBookAPI.Test.Infrastructure
         {
             if (context.PageElements.Any())
                 return;
+
+            var pageElements = GetMockPageElements();
             
+            context.AddRange(pageElements);
+            await context.SaveChangesAsync();
+        }
+        public static Guid GuidIndex(int number)
+        {
+            return Guid.Parse($"fcebe99a-d958-4b38-8ab6-568d{number.ToString("X8")}");
+        }
+
+        public static List<PageElement> GetMockPageElements(int numberOfElements = 3 )
+        {
             var pageElements = new List<PageElement>();
 
-            for (var i = 1; i < 4; i++)
+            for (var i = 1; i <= numberOfElements; i++)
                 pageElements.Add(new()
                 {
                     Id = GuidIndex(i), 
@@ -28,13 +40,7 @@ namespace EventBookAPI.Test.Infrastructure
                     Classname = $"SeedClassname{i}", 
                     UserId = GuidIdString(1)
                 });
-
-            context.AddRange(pageElements);
-            await context.SaveChangesAsync();
-        }
-        public static Guid GuidIndex(int number)
-        {
-            return Guid.Parse($"fcebe99a-d958-4b38-8ab6-568d{number.ToString("X8")}");
+            return pageElements;
         }
 
         public static int GuidIndex(string guid)
