@@ -53,6 +53,9 @@ namespace EventBookAPI.Installers
                     // options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = tokenValidationParameters;
                 });
+
+            services.AddAuthorization();
+            
         }
     }
 }
