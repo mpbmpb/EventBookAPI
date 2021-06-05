@@ -22,6 +22,8 @@ namespace EventBookAPI.Test.Infrastructure
         protected readonly IServiceProvider _serviceProvider;
         protected readonly HttpClient TestClient;
         protected WebApplicationFactory<Startup> _factory;
+        protected AuthSuccessResponse _registrationResponse;
+        protected string _userName;
 
         public IntegrationTestBase()
         {
@@ -45,6 +47,7 @@ namespace EventBookAPI.Test.Infrastructure
             TestClient = appFactory.CreateClient();
             _serviceProvider = appFactory.Services;
             _factory = appFactory;
+            _userName = Guid.NewGuid().ToString();
         }
 
         protected async Task AuthenticateAsync()
@@ -52,18 +55,16 @@ namespace EventBookAPI.Test.Infrastructure
             TestClient.DefaultRequestHeaders.Authorization = new("bearer", await GetJwtAsync());
         }
 
-        protected async Task<HttpResponseMessage> PostAsync<T>(Uri uri) 
-            => await TestClient.PostAsJsonAsync(uri, typeof(T));
-
         private async Task<string> GetJwtAsync()
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Identity.Register, new UserRegistrationRequest
             {
-                Email = $"{Guid.NewGuid().ToString()}@integration.com",
+                Email = $"{_userName}@integration.com",
                 Password = "SomePass1234!"
             });
 
             var registrationResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();
+            _registrationResponse = registrationResponse;
             return registrationResponse.Token;
         }
 

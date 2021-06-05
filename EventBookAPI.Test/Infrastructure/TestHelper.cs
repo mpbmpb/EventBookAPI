@@ -20,7 +20,7 @@ namespace EventBookAPI.Test.Infrastructure
 
             var pageElements = GetMockPageElements();
             
-            context.AddRange(pageElements);
+            context.PageElements.AddRange(pageElements);
             await context.SaveChangesAsync();
         }
         public static Guid GuidIndex(int number)
