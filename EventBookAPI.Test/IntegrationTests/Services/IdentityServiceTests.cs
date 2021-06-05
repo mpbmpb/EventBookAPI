@@ -338,7 +338,7 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             var expectedErrors = new[] {"This refresh token has been invalidated"};
             
             var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
-            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync();
+            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync(x => x.Token == authResult.RefreshToken);
             refreshToken.Invalidated = true;
             await context.SaveChangesAsync();
             
@@ -363,7 +363,7 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             var expectedErrors = new[] {"This refresh token has been used"};
             
             var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
-            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync();
+            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync(x => x.Token == authResult.RefreshToken);
             refreshToken.Used = true;
             await context.SaveChangesAsync();
             
@@ -388,7 +388,7 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             var expectedErrors = new[] {"This refresh token does not match this JWT"};
             
             var authResult = await _sut.RegisterAsync("test@email.nl", "Password42!");
-            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync();
+            var refreshToken = await context.RefreshTokens.FirstOrDefaultAsync(x => x.Token == authResult.RefreshToken);
             refreshToken.JwtId = "wrongId";
             await context.SaveChangesAsync();
             
