@@ -18,8 +18,10 @@ using Xunit;
 
 namespace EventBookAPI.Test.IntegrationTests.Services
 {
+    [Collection("Integration Test Collection")]
     public class IdentityServiceTests : IntegrationTestBase
     {
+
         private IIdentityService _sut;
 
         [Fact]

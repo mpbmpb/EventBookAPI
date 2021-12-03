@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -15,6 +16,7 @@ using Xunit;
 
 namespace EventBookAPI.Test.IntegrationTests
 {
+    [Collection("Integration Test Collection")]
     public class PageElementTests : IntegrationTestBase
     {
         [Fact]
@@ -38,8 +40,8 @@ namespace EventBookAPI.Test.IntegrationTests
         {
             var request = new CreatePageElementRequest
             {
-                Content = "TestContent42",
-                Classname = "TestClassname42"
+                Content = "TestContent43",
+                Classname = "TestClassname43"
             };
             await AuthenticateAsync();
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
@@ -69,8 +71,8 @@ namespace EventBookAPI.Test.IntegrationTests
         {
             var request = new CreatePageElementRequest
             {
-                Content = "TestContent42",
-                Classname = "TestClassname42"
+                Content = "TestContent44",
+                Classname = "TestClassname44"
             };
             await AuthenticateAsync();
             await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
@@ -87,8 +89,8 @@ namespace EventBookAPI.Test.IntegrationTests
         {
             var request = new CreatePageElementRequest
             {
-                Content = "TestContent42",
-                Classname = "TestClassname42"
+                Content = "TestContent45",
+                Classname = "TestClassname45"
             };
             await AuthenticateAsync();
             var postResponse = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
@@ -105,8 +107,8 @@ namespace EventBookAPI.Test.IntegrationTests
         {
             var request = new CreatePageElementRequest
             {
-                Content = "TestContent42",
-                Classname = "TestClassname42"
+                Content = "TestContent46",
+                Classname = "TestClassname46"
             };
             await AuthenticateAsync();
             var postResponse = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);

@@ -34,7 +34,7 @@ namespace EventBookAPI.Test.Infrastructure
                     {
                         services.RemoveAll(typeof(DataContext));
                         services.AddDbContext<DataContext>(options => 
-                            { options.UseInMemoryDatabase("TestDb"); });
+                            { options.UseInMemoryDatabase(Guid.NewGuid().ToString()); });
 
                         var serviceProvider = services.BuildServiceProvider();
                         using (var scope = serviceProvider.CreateScope())
