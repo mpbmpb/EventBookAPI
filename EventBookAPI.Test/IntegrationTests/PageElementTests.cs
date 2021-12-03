@@ -74,12 +74,12 @@ namespace EventBookAPI.Test.IntegrationTests
             };
             await AuthenticateAsync();
             await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
-
+        
             var response = await TestClient.GetAsync(ApiRoutes.PageElements.GetAll);
             var result = await response.Content.ReadAsAsync<List<PageElement>>();
-
+        
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeEquivalentTo(request);
+            result[0].Should().BeEquivalentTo(request);;
         }
 
         [Fact]
@@ -113,10 +113,9 @@ namespace EventBookAPI.Test.IntegrationTests
             var updateRequest = new UpdatePageElementRequest {Content = "NewContent", Classname = "NewName"};
 
             TestClient.DefaultRequestHeaders.Authorization = new("bearer", _registrationResponse.Token);
-            await TestClient.PostAsJsonAsync(postResponse.Headers.Location, updateRequest);
+            await TestClient.PutAsJsonAsync(postResponse.Headers.Location, updateRequest);
             var response = await TestClient.GetAsync(postResponse.Headers.Location);
             var result = await response.Content.ReadAsAsync<PageElement>();
-            
             result.Should().BeEquivalentTo(updateRequest);
         }
 
