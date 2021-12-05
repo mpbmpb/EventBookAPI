@@ -1,24 +1,8 @@
-using System.Linq;
-using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Controllers.v1;
-using EventBookAPI.Data;
-using EventBookAPI.Domain;
-using EventBookAPI.Options;
 using EventBookAPI.Services;
-using EventBookAPI.Test.Infrastructure;
-using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.IdentityModel.Tokens;
-using NSubstitute;
-using NSubstitute.Extensions;
-using Xunit;
 
 namespace EventBookAPI.Test.UnitTests.Controllers
 {

@@ -1,21 +1,13 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Controllers.v1;
 using EventBookAPI.Domain;
 using EventBookAPI.Services;
-using EventBookAPI.Test.Infrastructure;
-using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 
 namespace EventBookAPI.Test.UnitTests.Controllers
 {

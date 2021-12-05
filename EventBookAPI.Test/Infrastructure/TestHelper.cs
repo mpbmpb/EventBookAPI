@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using EventBookAPI.Data;
 using EventBookAPI.Domain;
 using Microsoft.AspNetCore.Http;

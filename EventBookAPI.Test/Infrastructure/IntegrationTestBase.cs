@@ -1,19 +1,12 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Data;
-using EventBookAPI.Services;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.IdentityModel.Tokens;
 
 namespace EventBookAPI.Test.Infrastructure
 {

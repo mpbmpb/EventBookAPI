@@ -1,20 +1,8 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Data;
-using EventBookAPI.Domain;
 using EventBookAPI.Options;
 using EventBookAPI.Services;
-using EventBookAPI.Test.Infrastructure;
-using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using NSubstitute;
-using Xunit;
 
 namespace EventBookAPI.Test.IntegrationTests.Services
 {

@@ -1,18 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Data;
 using EventBookAPI.Domain;
-using EventBookAPI.Test.Infrastructure;
-using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace EventBookAPI.Test.IntegrationTests
 {

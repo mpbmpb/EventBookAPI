@@ -1,7 +1,4 @@
-using System;
-using System.Security.Claims;
 using EventBookAPI.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
