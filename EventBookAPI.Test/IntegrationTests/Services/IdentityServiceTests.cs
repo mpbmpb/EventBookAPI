@@ -118,7 +118,7 @@ namespace EventBookAPI.Test.IntegrationTests.Services
         }
 
         [Fact]
-        public async Task Login_returns_authenticationResult_with_tokens_when_successful()
+        public async Task LoginAsync_returns_authenticationResult_with_tokens_when_successful()
         {
             using var scope = _serviceProvider.CreateScope();
             _sut = scope.ServiceProvider.GetRequiredService<IIdentityService>();

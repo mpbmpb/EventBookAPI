@@ -9,10 +9,10 @@ using EventBookAPI.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EventBookAPI.Test.IntegrationTests
+namespace EventBookAPI.Test.IntegrationTests.Services
 {
     [Collection("Integration Test Collection")]
-    public class PageElementTests : IntegrationTestBase
+    public class PageElementServiceTests : IntegrationTestBase
     {
         [Fact]
         public async Task Create_returns_response_with_uri_and_pageElement()
@@ -113,8 +113,44 @@ namespace EventBookAPI.Test.IntegrationTests
             await TestClient.PutAsJsonAsync(postResponse.Headers.Location, updateRequest);
             var response = await TestClient.GetAsync(postResponse.Headers.Location);
             var result = await response.Content.ReadAsAsync<PageElement>();
+            
             result.Should().BeEquivalentTo(updateRequest);
         }
+
+        [Fact]
+        public async Task Delete_gives_correct_response()
+        {
+            var request = new CreatePageElementRequest
+            {
+                Content = "TestContent46",
+                Classname = "TestClassname46"
+            };
+            await AuthenticateAsync();
+            var postResponse = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
+            
+            var result = await TestClient.DeleteAsync(postResponse.Headers.Location);
+
+            result.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task Delete_removes_pageElement_from_db()
+        {
+            var request = new CreatePageElementRequest
+            {
+                Content = "TestContent46",
+                Classname = "TestClassname46"
+            };
+            await AuthenticateAsync();
+            var postResponse = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
+            
+            await TestClient.DeleteAsync(postResponse.Headers.Location);
+            
+            var result = await TestClient.GetAsync(postResponse.Headers.Location);
+
+            result.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
 
     }
 }
