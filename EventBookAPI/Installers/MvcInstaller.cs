@@ -54,7 +54,11 @@ namespace EventBookAPI.Installers
                     options.TokenValidationParameters = tokenValidationParameters;
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("deleter", 
+                    builder => builder.RequireClaim("delete", "true"));
+            });
             
         }
     }
