@@ -61,6 +61,18 @@ namespace EventBookAPI.Test.Infrastructure
             return registrationResponse.Token;
         }
 
+        protected async Task LoginAsync()
+        {
+            var response = await TestClient.PostAsJsonAsync(ApiRoutes.Identity.Login, new UserLoginRequest
+            {
+                Email = $"{_userName}@integration.com",
+                Password = "SomePass1234!"
+            });
+            
+            var loginResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();
+            TestClient.DefaultRequestHeaders.Authorization = new("bearer", loginResponse.Token);
+        }
+
         public void Dispose()
         {
             using var serviceScope = _serviceProvider.CreateScope();

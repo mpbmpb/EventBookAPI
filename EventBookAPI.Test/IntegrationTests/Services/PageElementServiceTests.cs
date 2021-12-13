@@ -129,9 +129,36 @@ namespace EventBookAPI.Test.IntegrationTests.Services
             var postResponse = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
             
             var result = await TestClient.DeleteAsync(postResponse.Headers.Location);
+            
 
             result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
+
+        [Fact]
+        public async Task Delete_fails_when_user_does_not_have_proper_claim()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+            
+            await AuthenticateAsync();
+            var deleteClaim = await context.UserClaims.FirstOrDefaultAsync(
+                x => x.ClaimType == "delete.enabled");
+            context.UserClaims.Remove(deleteClaim);
+            await context.SaveChangesAsync();
+            
+            var request = new CreatePageElementRequest
+            {
+                Content = "TestContent46",
+                Classname = "TestClassname46"
+            };
+            await LoginAsync();
+            var postResponse = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
+            
+            var result = await TestClient.DeleteAsync(postResponse.Headers.Location);
+
+            result.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        }
+
 
         [Fact]
         public async Task Delete_removes_pageElement_from_db()
