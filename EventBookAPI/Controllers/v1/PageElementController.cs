@@ -88,8 +88,7 @@ namespace EventBookAPI.Controllers.v1
             return NotFound();
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Authorize(Policy = "deleter")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user")]
         [HttpDelete(ApiRoutes.PageElements.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid pageElementId)
         {

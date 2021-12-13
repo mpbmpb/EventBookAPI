@@ -22,12 +22,7 @@ namespace EventBookAPI.Installers
             services.AddSingleton(jwtSettings);
 
             services.AddScoped<IIdentityService, IdentityService>();
-
-            services.AddDefaultIdentity<IdentityUser>(options =>
-                    options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
-
+            
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -54,11 +49,7 @@ namespace EventBookAPI.Installers
                     options.TokenValidationParameters = tokenValidationParameters;
                 });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("deleter", 
-                    builder => builder.RequireClaim("delete", "true"));
-            });
+            services.AddAuthorization();
             
         }
     }

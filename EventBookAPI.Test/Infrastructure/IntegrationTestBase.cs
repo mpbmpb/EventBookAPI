@@ -3,6 +3,7 @@ using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +40,22 @@ namespace EventBookAPI.Test.Infrastructure
                 });
             TestClient = appFactory.CreateClient();
             _serviceProvider = appFactory.Services;
+            using (var serviceScope = _serviceProvider.CreateScope())
+            {
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                
+                if (!roleManager.RoleExistsAsync("admin").Result)
+                {
+                    var adminRole = new IdentityRole("admin");
+                    roleManager.CreateAsync(adminRole);
+                }
+
+                if (!roleManager.RoleExistsAsync("user").Result)
+                {
+                    var userRole = new IdentityRole("user");
+                    roleManager.CreateAsync(userRole);
+                }
+            }
             _factory = appFactory;
             _userName = Guid.NewGuid().ToString();
         }
@@ -59,6 +76,18 @@ namespace EventBookAPI.Test.Infrastructure
             var registrationResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();
             _registrationResponse = registrationResponse;
             return registrationResponse.Token;
+        }
+
+        protected async Task LoginAsync()
+        {
+            var response = await TestClient.PostAsJsonAsync(ApiRoutes.Identity.Login, new UserLoginRequest
+            {
+                Email = $"{_userName}@integration.com",
+                Password = "SomePass1234!"
+            });
+            
+            var loginResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();
+            TestClient.DefaultRequestHeaders.Authorization = new("bearer", loginResponse.Token);
         }
 
         public void Dispose()

@@ -20,14 +20,16 @@ namespace EventBookAPI.Services
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings,
-            TokenValidationParameters tokenValidationParameters, DataContext dataContext)
+            TokenValidationParameters tokenValidationParameters, DataContext dataContext, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
             _tokenValidationParameters = tokenValidationParameters;
             _dataContext = dataContext;
+            _roleManager = roleManager;
         }
 
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
@@ -54,9 +56,8 @@ namespace EventBookAPI.Services
                 {
                     Errors = createdUser.Errors.Select(x => { return x.Description; })
                 };
+            await _userManager.AddToRoleAsync(newUser, "user");
             
-            var result = await _userManager.AddClaimAsync(newUser, new Claim("delete", "true"));
-
             return await GenerateAuthenticationResultAsync(newUser);
         }
 
@@ -163,8 +164,24 @@ namespace EventBookAPI.Services
             };
 
             var userClaims = await _userManager.GetClaimsAsync(user);
-            
             claims.AddRange(userClaims);
+            
+            var userRoles = await _userManager.GetRolesAsync(user);
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRole));
+                var role = await _roleManager.FindByNameAsync(userRole);
+                if(role == null) continue;
+                var roleClaims = await _roleManager.GetClaimsAsync(role);
+
+                foreach (var roleClaim in roleClaims)
+                {
+                    if(claims.Contains(roleClaim))
+                        continue;
+
+                    claims.Add(roleClaim);
+                }
+            }
             
             var tokenDescriptor = new SecurityTokenDescriptor
             {

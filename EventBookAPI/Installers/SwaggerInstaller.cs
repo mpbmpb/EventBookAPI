@@ -19,7 +19,7 @@ namespace EventBookAPI.Installers
                 });
 
                 // To Enable authorization using Swagger (JWT)    
-                options.AddSecurityDefinition("Bearer", new()
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
@@ -29,7 +29,7 @@ namespace EventBookAPI.Installers
                     Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\n" +
                                   "Example: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\""
                 });
-                options.AddSecurityRequirement(new()
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
