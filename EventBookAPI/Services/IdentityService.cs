@@ -55,7 +55,7 @@ namespace EventBookAPI.Services
                     Errors = createdUser.Errors.Select(x => { return x.Description; })
                 };
             
-            var result = await _userManager.AddClaimAsync(newUser, new Claim("delete", "true"));
+            var result = await _userManager.AddClaimAsync(newUser, new Claim("delete.enabled", "true"));
 
             return await GenerateAuthenticationResultAsync(newUser);
         }

@@ -56,8 +56,8 @@ namespace EventBookAPI.Installers
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("deleter", 
-                    builder => builder.RequireClaim("delete", "true"));
+                options.AddPolicy("canDelete", 
+                    builder => builder.RequireClaim("delete.enabled", "true"));
             });
             
         }
