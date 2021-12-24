@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
@@ -43,7 +44,7 @@ namespace EventBookAPI.Controllers.v1
                 Id = pageElement.Id,
                 Content = pageElement.Content,
                 Classname = pageElement.Classname
-            };
+            }; 
 
             return Created(locationUri, response);
         }
@@ -51,7 +52,15 @@ namespace EventBookAPI.Controllers.v1
         [HttpGet(ApiRoutes.PageElements.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _pageElementService.GetPageElementsAsync());
+            var pageElements = await _pageElementService.GetPageElementsAsync();
+
+            var responses = pageElements.Select(elem => new PageElementResponse
+            {
+                Id = elem.Id,
+                Content = elem.Content,
+                Classname = elem.Classname
+            });
+            return Ok(responses);
         }
 
         [HttpGet(ApiRoutes.PageElements.Get)]
@@ -61,8 +70,15 @@ namespace EventBookAPI.Controllers.v1
 
             if (pageElement is null)
                 return NotFound();
-
-            return Ok(pageElement);
+            
+            var response = new PageElementResponse
+            {
+                Id = pageElement.Id,
+                Content = pageElement.Content,
+                Classname = pageElement.Classname
+            };
+            
+            return Ok(response);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -82,8 +98,15 @@ namespace EventBookAPI.Controllers.v1
 
             var updated = await _pageElementService.UpdatePageElementAsync(pageElement);
 
+            var response = new PageElementResponse
+            {
+                Id = pageElement.Id,
+                Content = pageElement.Content,
+                Classname = pageElement.Classname
+            };
+            
             if (updated)
-                return Ok(pageElement);
+                return Ok(response);
 
             return NotFound();
         }

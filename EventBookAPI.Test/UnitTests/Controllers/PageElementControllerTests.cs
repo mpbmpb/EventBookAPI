@@ -69,7 +69,7 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             var response = await _sut.GetAll();
 
             response.Should().BeOfType<OkObjectResult>();
-            response.As<OkObjectResult>().Value.Should().BeAssignableTo<IEnumerable<PageElement>>();
+            response.As<OkObjectResult>().Value.Should().BeAssignableTo<IEnumerable<PageElementResponse>>();
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             await TestHelper.SeedDbAsync(_seedContext);
 
             var response = await _sut.GetAll();
-            var result = response.As<OkObjectResult>().Value.As<IEnumerable<PageElement>>();
+            var result = response.As<OkObjectResult>().Value.As<IEnumerable<PageElementResponse>>();
 
             result.Count().Should().Be(3);
             result.FirstOrDefault()?.Content.Should().Be("SeedContent1");
@@ -93,19 +93,26 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             var response = await _sut.Get(TestHelper.GuidIndex(1));
 
             response.Should().BeOfType<OkObjectResult>();
-            response.As<OkObjectResult>().Value.Should().BeAssignableTo<PageElement>();
+            response.As<OkObjectResult>().Value.Should().BeAssignableTo<PageElementResponse>();
         }
 
         [Fact]
         public async Task Get_returns_correct_pageElement()
         {
             await TestHelper.SeedDbAsync(_seedContext);
-            var expectedResult = await _seedContext.PageElements.FirstOrDefaultAsync();
-
+            var pageElement = await _seedContext.PageElements.FirstOrDefaultAsync();
+            
+            var pageElementResponse = new PageElementResponse
+            {
+                Id = pageElement.Id,
+                Content = pageElement.Content,
+                Classname = pageElement.Classname
+            };
+            
             var response = await _sut.Get(TestHelper.GuidIndex(1));
-            var result = response.As<OkObjectResult>().Value.As<PageElement>();
+            var result = response.As<OkObjectResult>().Value.As<PageElementResponse>();
 
-            result.Should().BeEquivalentTo(expectedResult);
+            result.Should().BeEquivalentTo(pageElementResponse);
         }
 
         [Fact]
@@ -126,7 +133,7 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             var response = await _sut.Update(TestHelper.GuidIndex(1), request);
 
             response.Should().BeAssignableTo<OkObjectResult>();
-            response.As<OkObjectResult>().Value.Should().BeAssignableTo<PageElement>();
+            response.As<OkObjectResult>().Value.Should().BeAssignableTo<PageElementResponse>();
         }
 
         [Fact]
@@ -162,7 +169,7 @@ namespace EventBookAPI.Test.UnitTests.Controllers
             var request = new UpdatePageElementRequest {Content = "Changed", Classname = "ChangedClass"};
 
             var response = await _sut.Update(TestHelper.GuidIndex(1), request);
-            var result = response.As<OkObjectResult>().Value.As<PageElement>();
+            var result = response.As<OkObjectResult>().Value.As<PageElementResponse>();
 
             result.Content.Should().Match(request.Content);
             result.Classname.Should().Match(request.Classname);
