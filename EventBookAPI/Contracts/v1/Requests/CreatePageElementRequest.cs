@@ -1,9 +1,8 @@
-namespace EventBookAPI.Contracts.v1.Requests
-{
-    public class CreatePageElementRequest
-    {
-        public string Content { get; set; }
+namespace EventBookAPI.Contracts.v1.Requests;
 
-        public string Classname { get; set; }
-    }
+public class CreatePageElementRequest
+{
+    public string Content { get; set; }
+
+    public string Classname { get; set; }
 }

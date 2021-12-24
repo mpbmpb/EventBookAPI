@@ -9,48 +9,47 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace EventBookAPI.Installers
+namespace EventBookAPI.Installers;
+
+public class MvcInstaller : IInstaller
 {
-    public class MvcInstaller : IInstaller
+    public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        services.AddControllers();
+
+        var jwtSettings = new JwtSettings();
+        configuration.Bind(nameof(JwtSettings), jwtSettings);
+        services.AddSingleton(jwtSettings);
+
+        services.AddScoped<IIdentityService, IdentityService>();
+            
+        var tokenValidationParameters = new TokenValidationParameters
         {
-            services.AddControllers();
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            RequireExpirationTime = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
 
-            var jwtSettings = new JwtSettings();
-            configuration.Bind(nameof(JwtSettings), jwtSettings);
-            services.AddSingleton(jwtSettings);
+        services.AddSingleton(tokenValidationParameters);
 
-            services.AddScoped<IIdentityService, IdentityService>();
-            
-            var tokenValidationParameters = new TokenValidationParameters
+        services.AddAuthentication(options =>
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                RequireExpirationTime = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                // options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = tokenValidationParameters;
+            });
 
-            services.AddSingleton(tokenValidationParameters);
-
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.SaveToken = true;
-                    // options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = tokenValidationParameters;
-                });
-
-            services.AddAuthorization();
+        services.AddAuthorization();
             
-        }
     }
 }

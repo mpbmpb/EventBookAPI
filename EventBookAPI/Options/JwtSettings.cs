@@ -1,11 +1,10 @@
 using System;
 
-namespace EventBookAPI.Options
+namespace EventBookAPI.Options;
+
+public class JwtSettings
 {
-    public class JwtSettings
-    {
-        public string Secret { get; set; }
-        public TimeSpan TokenLifetime { get; set; }
-        public TimeSpan RefreshTokenLifetime { get; set; }
-    }
+    public string Secret { get; set; }
+    public TimeSpan TokenLifetime { get; set; }
+    public TimeSpan RefreshTokenLifetime { get; set; }
 }
