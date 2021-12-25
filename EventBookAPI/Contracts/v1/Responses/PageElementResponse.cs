@@ -1,5 +1,3 @@
-using System;
-
 namespace EventBookAPI.Contracts.v1.Responses;
 
 public class PageElementResponse

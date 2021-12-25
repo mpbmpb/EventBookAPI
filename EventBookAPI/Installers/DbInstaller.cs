@@ -14,8 +14,12 @@ public class DbInstaller : IInstaller
         services.AddDbContext<DataContext>(options =>
             options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         services.AddDefaultIdentity<IdentityUser>(options =>
-                options.SignIn.RequireConfirmedAccount = true)
-            .AddRoles<IdentityRole>()
+        {
+            options.SignIn.RequireConfirmedAccount = true;
+            options.Password.RequiredLength = 6;
+        })
+
+        .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<DataContext>()
             .AddDefaultTokenProviders();
 

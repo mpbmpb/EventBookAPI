@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace EventBookAPI.Domain;
 
 public class AuthenticationResult

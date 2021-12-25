@@ -1,6 +1,5 @@
 using AutoMapper;
 using EventBookAPI.Data;
-using EventBookAPI.Mapping;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

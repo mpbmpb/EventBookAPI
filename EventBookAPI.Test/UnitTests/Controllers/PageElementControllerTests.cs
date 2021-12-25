@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using System.Security.Claims;
-using AutoMapper;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;
 using EventBookAPI.Contracts.v1.Responses;
 using EventBookAPI.Controllers.v1;
-using EventBookAPI.Domain;
 using EventBookAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -79,9 +76,9 @@ public class PageElementControllerTests : UnitTestBase
         await TestHelper.SeedDbAsync(_seedContext);
 
         var response = await _sut.GetAll();
-        var result = response.As<OkObjectResult>().Value.As<IEnumerable<PageElementResponse>>();
+        var result = response.As<OkObjectResult>().Value.As<IEnumerable<PageElementResponse>>().ToList();
 
-        result.Count().Should().Be(3);
+        result.Count.Should().Be(3);
         result.FirstOrDefault()?.Content.Should().Be("SeedContent1");
         result.FirstOrDefault()?.Classname.Should().Be("SeedClassname1");
     }

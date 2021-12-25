@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace EventBookAPI.Contracts.v1.Responses;
 
 public class AuthFailedResponse

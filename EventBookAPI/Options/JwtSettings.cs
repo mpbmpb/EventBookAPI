@@ -1,5 +1,3 @@
-using System;
-
 namespace EventBookAPI.Options;
 
 public class JwtSettings

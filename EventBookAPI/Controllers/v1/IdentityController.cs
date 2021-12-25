@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using EventBookAPI.Contracts.v1;
 using EventBookAPI.Contracts.v1.Requests;

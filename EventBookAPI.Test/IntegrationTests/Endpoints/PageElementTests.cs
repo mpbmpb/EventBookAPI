@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using EventBookAPI.Contracts.v1;
@@ -9,10 +8,10 @@ using EventBookAPI.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EventBookAPI.Test.IntegrationTests.Services;
+namespace EventBookAPI.Test.IntegrationTests.Endpoints;
 
 [Collection("Integration Test Collection")]
-public class PageElementServiceTests : IntegrationTestBase
+public class PageElementTests : IntegrationTestBase
 {
     [Fact]
     public async Task Create_returns_response_with_uri_and_pageElement()
@@ -47,6 +46,25 @@ public class PageElementServiceTests : IntegrationTestBase
         var result = await context.PageElements.FirstOrDefaultAsync(x => x.Id == newElement.Id);
 
         result.Should().BeEquivalentTo(request);
+    }
+
+    [Theory]
+    [InlineData("4classname")]
+    [InlineData("class name")]
+    [InlineData("className!")]
+    public async Task Create_returns_BadRequest_when_ClassName_violates_contract(string className)
+    {
+        var request = new CreatePageElementRequest
+        {
+            Content = "TestContent42",
+            Classname = className
+        };
+        await AuthenticateAsync();
+        var response = await TestClient.PostAsJsonAsync(ApiRoutes.PageElements.Create, request);
+        var result = await response.Content.ReadAsAsync<ErrorResponse>();
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        result.Errors[0].Message.Should().Match("Classname must begin with a letter and may only contain upper & lowercase letters a-z and digits 0-9");
     }
 
     [Fact]

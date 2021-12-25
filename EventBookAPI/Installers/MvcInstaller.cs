@@ -1,10 +1,9 @@
-using System;
 using System.Text;
-using EventBookAPI.Data;
+using EventBookAPI.Filters;
 using EventBookAPI.Options;
 using EventBookAPI.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +14,8 @@ public class MvcInstaller : IInstaller
 {
     public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddControllers();
+        services.AddMvc(options => options.Filters.Add<ValidationFilter>())
+            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
 
         var jwtSettings = new JwtSettings();
         configuration.Bind(nameof(JwtSettings), jwtSettings);
@@ -45,11 +45,10 @@ public class MvcInstaller : IInstaller
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                // options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = tokenValidationParameters;
             });
 
         services.AddAuthorization();
-            
+
     }
 }
